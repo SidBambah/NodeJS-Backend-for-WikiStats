@@ -20,6 +20,3 @@ app.get('/wikipedia_counter', function (req, res) {
         res.write('Sample message');
     }
 });
-
-
-app.listen(8080);
