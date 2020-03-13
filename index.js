@@ -1,10 +1,12 @@
 var express = require('express');
-var cors = require('cors');
-const kafka = require('kafka-node');
+var kafka = require('kafka-node');
 
 var app = express();
 
-app.use(cors());
+// respond with "hello world" when a GET request is made to the homepage
+app.get('/', function (req, res) {
+    res.send('hello world')
+  })
 
 // Called once for each new client. Note, this response is left open!
 app.get('/wikipedia_counter', function (req, res) {
