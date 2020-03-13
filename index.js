@@ -21,4 +21,4 @@ app.get('/wikipedia_counter', function (req, res) {
     }
 });
 
-app.listen()
+app.listen(process.env.PORT || 8080)
