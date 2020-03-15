@@ -163,7 +163,7 @@ app.get('/hourlyChangesBarChart', function(req, res){
         res.send({"error": "Day of week not found in database."});
       }
       db.close();
-    });
+    }).setOptions({ lean: true });
   });
 })
 
