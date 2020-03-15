@@ -2,7 +2,6 @@ var express = require('express');
 var cors = require('cors');
 var kafka = require('kafka-node');
 var MongoClient = require('mongodb').MongoClient;
-var fs = require('fs');
 require('events').EventEmitter.defaultMaxListeners = 100
 
 //Kafka Configuration
@@ -23,7 +22,6 @@ var options = {
 var consumer = new Consumer(client, topics, options);
 
 //MongoDB Configuration
-var credentials = JSON.parse(fs.readFileSync('./credentials.config', 'utf8'));
 const uri = "mongodb+srv://" + process.env.USERNAME + ":" + process.env.PASSWORD + "@" + process.env.HOST + "/" + process.env.DATABASE + "?retryWrites=true&w=majority";
 
 //Express Configuration
