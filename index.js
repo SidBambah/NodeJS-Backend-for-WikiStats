@@ -23,6 +23,21 @@ var options = {
 var consumer = new Consumer(client, topics, options);
 
 //MongoDB Configuration
+var mongoOptions = { 
+  server: { 
+    socketOptions: { 
+      keepAlive: 300000, connectTimeoutMS: 30000 
+    } 
+  }, 
+  replset: { 
+    socketOptions: { 
+      keepAlive: 300000, 
+      connectTimeoutMS : 30000 
+    } 
+  },
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+};
 const uri = "mongodb+srv://" + process.env.USERNAME + ":" + process.env.PASSWORD + "@" + process.env.HOST + "/" + process.env.DATABASE + "?retryWrites=true&w=majority";
 
 //Express Configuration
@@ -149,10 +164,7 @@ app.get('/noeditLineChart', function(req, res) {
 
 //MongoDB API for persistent 
 app.get('/hourlyChangesBarChart', function(req, res){
-  MongoClient.connect(uri, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-    }, function(err, db) {
+  MongoClient.connect(uri, mongoOptions, function(err, db) {
     if (err) throw err;
     var dbo = db.db("wikiStats");
     dbo.collection("daywise_changes").findOne({day: req.query['day']}, {lean: true, projection:{_id:0, day:0}}, function(err, result) {
