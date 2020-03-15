@@ -154,7 +154,7 @@ app.get('/hourlyChangesBarChart', function(req, res){
     }, function(err, db) {
     if (err) throw err;
     var dbo = db.db("wikiStats");
-    dbo.collection("daywise_changes").findOne({day: req.query['day']}, {projection:{_id:0, day:0}}, function(err, result) {
+    dbo.collection("daywise_changes").find({day: req.query['day']}, {projection:{_id:0, day:0}}, function(err, result) {
       if (err) throw err;
       if (result != null){
         formatted = {"labels": Object.keys(result), "data": Object.values(result)};
@@ -163,7 +163,7 @@ app.get('/hourlyChangesBarChart', function(req, res){
         res.send({"error": "Day of week not found in database."});
       }
       db.close();
-    }).setOptions({ lean: true });
+    });
   });
 })
 
