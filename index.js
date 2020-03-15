@@ -23,18 +23,7 @@ var options = {
 var consumer = new Consumer(client, topics, options);
 
 //MongoDB Configuration
-var mongoOptions = { 
-  server: { 
-    socketOptions: { 
-      keepAlive: 300000, connectTimeoutMS: 30000 
-    } 
-  }, 
-  replset: { 
-    socketOptions: { 
-      keepAlive: 300000, 
-      connectTimeoutMS : 30000 
-    } 
-  },
+var mongoOptions = {
   useUnifiedTopology: true,
   useNewUrlParser: true,
 };
