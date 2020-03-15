@@ -1,14 +1,16 @@
-require('dotenv').config()
+require('dotenv').config();
 var express = require('express');
 var cors = require('cors');
 var kafka = require('kafka-node');
 var MongoClient = require('mongodb').MongoClient;
-require('events').EventEmitter.defaultMaxListeners = 100000
+var fs = require('fs');
+require('events').EventEmitter.defaultMaxListeners = 5000000
 
 //Kafka Configuration
 var Consumer = kafka.Consumer;
 
-const client = new kafka.KafkaClient({kafkaHost: '35.185.103.25:9092'});
+//const client = new kafka.KafkaClient({kafkaHost: '35.185.103.25:9092'});
+const client = new kafka.KafkaClient({kafkaHost: '35.231.177.25:9092'});
 
 var topics = [{
   topic: 'processed'
@@ -109,7 +111,7 @@ app.get('/userLeaderboard', function(req, res) {
   });
 });
 
-app.get('/additionLineChart', function(req, res) {
+app.get('/lineChart', function(req, res) {
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache',
@@ -117,36 +119,8 @@ app.get('/additionLineChart', function(req, res) {
   });
   consumer.on('message', function(message){
     var data = JSON.parse(message['value']);
-    if (data.hasOwnProperty('additionLineChart')){
-      res.write("data: " + JSON.stringify(data['additionLineChart']) + "\n\n");
-    }
-  });
-});
-
-app.get('/deletionLineChart', function(req, res) {
-  res.writeHead(200, {
-    'Content-Type': 'text/event-stream',
-    'Cache-Control': 'no-cache',
-    'Connection': 'keep-alive'
-  });
-  consumer.on('message', function(message){
-    var data = JSON.parse(message['value']);
-    if (data.hasOwnProperty('deletionLineChart')){
-      res.write("data: " + JSON.stringify(data['deletionLineChart']) + "\n\n");
-    }
-  });
-});
-
-app.get('/noeditLineChart', function(req, res) {
-  res.writeHead(200, {
-    'Content-Type': 'text/event-stream',
-    'Cache-Control': 'no-cache',
-    'Connection': 'keep-alive'
-  });
-  consumer.on('message', function(message){
-    var data = JSON.parse(message['value']);
-    if (data.hasOwnProperty('noeditLineChart')){
-      res.write("data: " + JSON.stringify(data['noeditLineChart']) + "\n\n");
+    if (data.hasOwnProperty('additionLineChart') || data.hasOwnProperty('deletionLineChart') || data.hasOwnProperty('noeditLineChart')){
+      res.write("data: " + JSON.stringify(data) + "\n\n");
     }
   });
 });
@@ -168,5 +142,6 @@ app.get('/hourlyChangesBarChart', function(req, res){
     });
   });
 })
+
 
 app.listen(process.env.PORT || 8080)
