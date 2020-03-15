@@ -24,7 +24,7 @@ var consumer = new Consumer(client, topics, options);
 
 //MongoDB Configuration
 var credentials = JSON.parse(fs.readFileSync('./credentials.config', 'utf8'));
-const uri = "mongodb+srv://" + credentials['USERNAME'] + ":" + credentials['PASSWORD'] + "@" + credentials['HOST'] + "/" + credentials['DATABASE'] + "?retryWrites=true&w=majority";
+const uri = "mongodb+srv://" + process.env.USERNAME + ":" + process.env.PASSWORD + "@" + process.env.HOST + "/" + process.env.DATABASE + "?retryWrites=true&w=majority";
 
 //Express Configuration
 var app = express();
