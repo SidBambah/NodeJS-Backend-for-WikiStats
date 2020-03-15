@@ -8,9 +8,7 @@ require('events').EventEmitter.defaultMaxListeners = 100
 //Kafka Configuration
 var Consumer = kafka.Consumer;
 
-const client = new kafka.KafkaClient({kafkaHost: '35.185.103.25:9092'}); // Sid
-//const client = new kafka.KafkaClient({kafkaHost: '35.231.177.25:9092'}); // Jeswanth
-
+const client = new kafka.KafkaClient({kafkaHost: '35.185.103.25:9092'});
 
 var topics = [{
   topic: 'processed'
@@ -36,10 +34,8 @@ app.use(cors());
 app.get('/', function (req, res) {
     res.send('hello world');
   });
-/*
-consumer.on('message', function(message){
-  console.log(JSON.parse(message['value']));
-})*/
+
+// EventSource Stream for all of the visualizations
 app.get('/domainCountDonut', function(req, res) {
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
@@ -152,6 +148,7 @@ app.get('/noeditLineChart', function(req, res) {
   });
 });
 
+//MongoDB API for persistent 
 app.get('/hourlyChangesBarChart', function(req, res){
   MongoClient.connect(uri, {
     useUnifiedTopology: true,
