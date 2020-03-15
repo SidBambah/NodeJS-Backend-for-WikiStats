@@ -2,7 +2,7 @@ var express = require('express');
 var cors = require('cors');
 var kafka = require('kafka-node');
 var MongoClient = require('mongodb').MongoClient;
-require('events').EventEmitter.defaultMaxListeners = 100
+require('events').EventEmitter.defaultMaxListeners = 100000
 
 //Kafka Configuration
 var Consumer = kafka.Consumer;
