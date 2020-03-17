@@ -9,7 +9,7 @@ require('events').EventEmitter.defaultMaxListeners = 5000000
 //Kafka Configuration
 var Consumer = kafka.Consumer;
 
-const client = new kafka.KafkaClient({kafkaHost: '35.231.177.25:9092'});
+const client = new kafka.KafkaClient({kafkaHost: '35.185.103.25:9092'});
 
 var topics = [{
   topic: 'processed'
